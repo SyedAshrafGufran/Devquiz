@@ -2,39 +2,43 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_COMPOSE_FILE = 'docker-compose.yaml'
+        BACKEND_IMAGE = "ashraf1786/devquiz-backend"
+        FRONTEND_IMAGE = "ashraf1786/devquiz-frontend"
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Clone Repo') {
             steps {
-                checkout scm
+                git branch: 'main', url: 'https://github.com/SyedAshrafGufran/Devquiz.git'
             }
         }
 
-        stage('Build Services') {
+        stage('Build Docker Images') {
             steps {
-                sh 'docker-compose -f $DOCKER_COMPOSE_FILE build'
+                sh 'docker build -t $BACKEND_IMAGE ./backend'
+                sh 'docker build -t $FRONTEND_IMAGE ./frontend'
             }
         }
 
-        stage('Run Tests') {
+        stage('Push to DockerHub') {
             steps {
-                sh 'docker-compose -f $DOCKER_COMPOSE_FILE run --rm backend npm test || true'
-                sh 'docker-compose -f $DOCKER_COMPOSE_FILE run --rm frontend npm test || true'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+                    sh 'docker push $BACKEND_IMAGE'
+                    sh 'docker push $FRONTEND_IMAGE'
+                }
             }
         }
 
-        stage('Deploy Services') {
+        stage('Deploy to Kubernetes') {
             steps {
-                sh 'docker-compose -f $DOCKER_COMPOSE_FILE up -d'
+                sh 'kubectl apply -f k8s/mongo-deployment.yaml'
+                sh 'kubectl apply -f k8s/mongo-service.yaml'
+                sh 'kubectl apply -f k8s/backend-deployment.yaml'
+                sh 'kubectl apply -f k8s/backend-service.yaml'
+                sh 'kubectl apply -f k8s/frontend-deployment.yaml'
+                sh 'kubectl apply -f k8s/frontend-service.yaml'
             }
-        }
-    }
-
-    post {
-        always {
-            sh 'docker system prune -f'
         }
     }
 }
