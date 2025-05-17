@@ -63,15 +63,3 @@ pipeline {
   }
 }
 
-  post {
-    always {
-      script {
-        currentBuild.result = 'SUCCESS'
-      }
-    }
-    failure {
-      script {
-        currentBuild.result = 'FAILURE'
-      }
-    }
-  }
