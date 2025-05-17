@@ -48,6 +48,7 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
+                withEnv(["KUBECONFIG=C:\\Program Files\\Jenkins\\config"]) {
     bat 'kubectl apply -f k8s\\mongo-deployment.yaml'
     bat 'kubectl apply -f k8s\\mongo-service.yaml'
     bat 'kubectl apply -f k8s\\backend-deployment.yaml'
@@ -58,4 +59,27 @@ pipeline {
 
         }
     }
+    stage('Clean Up') {
+      steps {
+        script {
+          docker.image("${env.BACKEND_IMAGE}").remove()
+          docker.image("${env.FRONTEND_IMAGE}").remove()
+        }
+      }
+    }
+  }
+}
+
+  post {
+    always {
+      script {
+        currentBuild.result = 'SUCCESS'
+      }
+    }
+    failure {
+      script {
+        currentBuild.result = 'FAILURE'
+      }
+    }
+  }
 }
