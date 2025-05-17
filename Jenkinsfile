@@ -48,13 +48,14 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl apply -f k8s/mongo-deployment.yaml'
-                sh 'kubectl apply -f k8s/mongo-service.yaml'
-                sh 'kubectl apply -f k8s/backend-deployment.yaml'
-                sh 'kubectl apply -f k8s/backend-service.yaml'
-                sh 'kubectl apply -f k8s/frontend-deployment.yaml'
-                sh 'kubectl apply -f k8s/frontend-service.yaml'
-            }
+    bat 'kubectl apply -f k8s\\mongo-deployment.yaml'
+    bat 'kubectl apply -f k8s\\mongo-service.yaml'
+    bat 'kubectl apply -f k8s\\backend-deployment.yaml'
+    bat 'kubectl apply -f k8s\\backend-service.yaml'
+    bat 'kubectl apply -f k8s\\frontend-deployment.yaml'
+    bat 'kubectl apply -f k8s\\frontend-service.yaml'
+}
+
         }
     }
 }
