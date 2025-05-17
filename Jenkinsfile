@@ -59,14 +59,7 @@ pipeline {
 
         }
     }
-    stage('Clean Up') {
-      steps {
-        script {
-          docker.image("${env.BACKEND_IMAGE}").remove()
-          docker.image("${env.FRONTEND_IMAGE}").remove()
-        }
-      }
-    }
+    
   }
 }
 
