@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ashraf1786/devquiz-backend:latest
+          image: ashraf1786/devquiz-backend
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
