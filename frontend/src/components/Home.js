@@ -8,7 +8,7 @@ function Home() {
   return (
     <div className="home-container">
       <div className="logo-container">
-        <img src="/images/download (2).jpeg" alt="Site Logo" className="logo" />
+        <img src="/images/img1.png" alt="Site Logo" className="logo" />
         <h1 className="main-title">Tech Trivia: Byte The Quiz</h1>
       </div>
 
