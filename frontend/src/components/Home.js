@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Quiz.css';
-import logo from '../images/img1.png';
+import logo from '../images/img.jpg';
 
 function Home() {
   const navigate = useNavigate();
