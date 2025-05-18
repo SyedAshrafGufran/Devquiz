@@ -12,25 +12,31 @@ function StartQuiz() {
       alert('Please enter your username to start the quiz.');
       return;
     }
-    // Navigate to the quiz page with the username and domain as state
     navigate(`/quiz/${domain}`, { state: { username } });
   };
 
   return (
-    <div style={{ padding: 20, textAlign: 'center' }}>
-      <h2>Welcome to the {domain} Quiz</h2>
-      <div style={{ marginBottom: 20 }}>
-        <label>Enter Username: </label>
+    <div className="quiz-container">
+      <h2 className="quiz-title">How well do you know {domain}?</h2>
+
+      <div className="username-container">
+        <label className="username-label">Enter Username:</label>
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          style={{ marginLeft: 10 }}
+          className="username-input"
         />
       </div>
-      <button onClick={handleStart} style={{ padding: '10px 20px', cursor: 'pointer' }}>
+
+      <button onClick={handleStart} className="start-button">
         Start Quiz
       </button>
+
+      <footer className="footer-quiz">
+        <hr className="footer-line" />
+        <p>© 2025 Tech Trivia. All rights reserved.</p>
+      </footer>
     </div>
   );
 }

@@ -12,27 +12,26 @@ function DomainSelection() {
   }, []);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Select a Domain</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+    <div className="quiz-container">
+      <h2 className="quiz-title">Please choose your domain</h2>
+
+      <div className="domain-buttons">
         {domains.map(domain => (
-          <div
+          <button
             key={domain._id}
             onClick={() => navigate(`/start-quiz/${domain.name}`)}
-            style={{
-              border: '1px solid #ccc',
-              borderRadius: '10px',
-              padding: '20px',
-              cursor: 'pointer',
-              width: '200px',
-              textAlign: 'center',
-            }}
+            className="domain-button"
           >
             <h3>{domain.name}</h3>
             <p>{domain.description}</p>
-          </div>
+          </button>
         ))}
       </div>
+
+      {/* Footer (placed just below the buttons) */}
+      <footer className="domain-footer">
+        <p>© 2025 Tech Trivia. All rights reserved.</p>
+      </footer>
     </div>
   );
 }

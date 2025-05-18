@@ -16,10 +16,11 @@ function Quiz() {
   useEffect(() => {
     if (!username) {
       alert('Username is required to start the quiz.');
-      navigate('/'); // Redirect to home if username is missing
+      navigate('/');
       return;
     }
-    setStartTime(Date.now()); // Start the timer when the quiz loads
+
+    setStartTime(Date.now());
     axios.get(`http://localhost:5000/api/questions/${domain}`).then((res) => {
       setQuestions(res.data);
     });
@@ -32,70 +33,58 @@ function Quiz() {
   const handleSubmit = () => {
     const endTime = Date.now();
     const timeTaken = Math.floor((endTime - startTime) / 1000);
-
-    // Calculate the score by comparing selected answers with correct answers
-    const score = questions.reduce((acc, q, i) => {
-      return acc + (answers[i] === q.correctAnswer ? 1 : 0);
-    }, 0);
+    const score = questions.reduce((acc, q, i) => acc + (answers[i] === q.correctAnswer ? 1 : 0), 0);
 
     axios.post('http://localhost:5000/api/submit', {
       username,
       domain,
       score,
-      timeTaken
+      timeTaken,
     }).then(() => {
       navigate('/result', { state: { domain, totalQuestions: questions.length } });
     });
   };
 
-  if (!questions.length) return <p>Loading questions...</p>;
+  if (!questions.length) return <div className="quiz-container"><p>Loading questions...</p></div>;
 
   return (
-    <div style={{ padding: 20 }}>
+    <div className="quiz-container">
       {currentQ === 0 && (
-        <div style={{ marginBottom: 20 }}>
-          <h2>Welcome, {username}!</h2>
-          <p>Get ready to test your knowledge in the {domain} domain. You can do it!</p>
+        <div className="welcome-box">
+          <h2 className="quiz-title">Welcome, {username}!</h2>
+          <p className="quiz-subtitle">Let's dive into the world of <strong>{domain}</strong> and test your knowledge!</p>
         </div>
       )}
+
       {questions[currentQ] && questions[currentQ].questionText && (
         <>
-          <h2>Question {currentQ + 1} / {questions.length}</h2>
-          <h3>{questions[currentQ].questionText}</h3>
-          <div>
+          <h3 className="question-counter">Question {currentQ + 1} / {questions.length}</h3>
+          <h2 className="question-title">{questions[currentQ].questionText}</h2>
+
+          <div className="options-container">
             {questions[currentQ].options.map((opt, i) => (
               <button
                 key={i}
                 onClick={() => handleOptionClick(opt)}
-                style={{
-                  display: 'block',
-                  margin: '10px 0',
-                  backgroundColor: answers[currentQ] === opt ? '#d3d3d3' : '',
-                }}
+                className={`option-button ${answers[currentQ] === opt ? 'selected' : ''}`}
               >
                 {opt}
               </button>
             ))}
           </div>
-          <div style={{ marginTop: 20 }}>
+
+          <div className="nav-buttons">
             {currentQ > 0 && (
-              <button
-                onClick={() => setCurrentQ(currentQ - 1)}
-                style={{ marginRight: 10 }}
-              >
-                Previous Question
+              <button onClick={() => setCurrentQ(currentQ - 1)} className="nav-button">
+                Previous
               </button>
             )}
-            {currentQ < questions.length - 1 && (
-              <button
-                onClick={() => setCurrentQ(currentQ + 1)}
-                style={{ marginRight: 10 }}
-              >
-                Next Question
+            {currentQ < questions.length - 1 ? (
+              <button onClick={() => setCurrentQ(currentQ + 1)} className="nav-button">
+                Next
               </button>
-            )}
-            {currentQ === questions.length - 1 && (
-              <button onClick={handleSubmit} style={{ backgroundColor: 'green', color: 'white' }}>
+            ) : (
+              <button onClick={handleSubmit} className="submit-button">
                 Submit Quiz
               </button>
             )}

@@ -4,10 +4,21 @@ import '../styles/Quiz.css';
 
 function Home() {
   const navigate = useNavigate();
+
   return (
-    <div style={{ textAlign: 'center', padding: '50px' }}>
-      <h1>Welcome to the Quiz App</h1>
+    <div className="home-container">
+      <div className="logo-container">
+        <img src="/images/download (2).jpeg" alt="Site Logo" className="logo" />
+        <h1 className="main-title">Tech Trivia: Math & Science Edition</h1>
+      </div>
+
+      <p className="subtitle">Test your brain with quick questions on math and science!</p>
       <button onClick={() => navigate('/domains')}>Start Quiz</button>
+
+      {/* Footer */}
+      <footer className="footer">
+        <p>© 2025 Tech Trivia. All rights reserved.</p>
+      </footer>
     </div>
   );
 }

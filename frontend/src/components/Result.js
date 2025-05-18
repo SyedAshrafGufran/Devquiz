@@ -9,7 +9,6 @@ function Result() {
   const [leaderboard, setLeaderboard] = useState([]);
   const [domain, setDomain] = useState('');
   const [totalQuestions, setTotalQuestions] = useState(0);
- 
 
   useEffect(() => {
     const state = location.state;
@@ -18,39 +17,37 @@ function Result() {
       return;
     }
     setDomain(state.domain);
-    setTotalQuestions(state.totalQuestions); // Get total questions from state
+    setTotalQuestions(state.totalQuestions);
     axios.get(`http://localhost:5000/api/leaderboard/${state.domain}`).then(res => setLeaderboard(res.data));
   }, [location, navigate]);
 
   return (
-    <div style={{ padding: 20, textAlign: 'center' }}>
-      <h2>🎉 Result Submitted Successfully!</h2>
-      <h3>🏆 Leaderboard - {domain}</h3>
+    <div className="result-container">
+      <h2 className="result-heading">🎉 Result Submitted Successfully!</h2>
+      <h3 className="leaderboard-title">🏆 Leaderboard - {domain}</h3>
 
-      <table style={{ margin: '0 auto', borderCollapse: 'collapse', width: '80%' }}>
+      <table className="leaderboard-table">
         <thead>
           <tr>
-            <th style={{ border: '1px solid #ccc', padding: 10 }}>Rank</th>
-            <th style={{ border: '1px solid #ccc', padding: 10 }}>Username</th>
-            <th style={{ border: '1px solid #ccc', padding: 10 }}>Score</th>
-            <th style={{ border: '1px solid #ccc', padding: 10 }}>Time (s)</th>
+            <th className="table-header">Rank</th>
+            <th className="table-header">Username</th>
+            <th className="table-header">Score</th>
+            <th className="table-header">Time (s)</th>
           </tr>
         </thead>
         <tbody>
           {leaderboard.map((entry, i) => (
-            <tr key={i}>
-              <td style={{ border: '1px solid #ccc', padding: 10 }}>{i + 1}</td>
-              <td style={{ border: '1px solid #ccc', padding: 10 }}>{entry.username}</td>
-              <td style={{ border: '1px solid #ccc', padding: 10 }}>
-                {entry.score}/{totalQuestions} {/* Display score as "correct/total" */}
-              </td>
-              <td style={{ border: '1px solid #ccc', padding: 10 }}>{entry.timeTaken}</td>
+            <tr key={i} className="table-row">
+              <td className="table-cell">{i + 1}</td>
+              <td className="table-cell">{entry.username}</td>
+              <td className="table-cell">{entry.score}/{totalQuestions}</td>
+              <td className="table-cell">{entry.timeTaken}</td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <button onClick={() => navigate('/')}>Back to Home</button>
+      <button className="back-home-btn" onClick={() => navigate('/')}>Back to Home</button>
     </div>
   );
 }
