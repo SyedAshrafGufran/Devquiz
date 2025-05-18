@@ -9,10 +9,10 @@ function Home() {
     <div className="home-container">
       <div className="logo-container">
         <img src="/images/download (2).jpeg" alt="Site Logo" className="logo" />
-        <h1 className="main-title">Tech Trivia: Math & Science Edition</h1>
+        <h1 className="main-title">Tech Trivia: Byte The Quiz</h1>
       </div>
 
-      <p className="subtitle">Test your brain with quick questions on math and science!</p>
+      <p className="subtitle">Test your brain with quick questions on various topics!</p>
       <button onClick={() => navigate('/domains')}>Start Quiz</button>
 
       {/* Footer */}
