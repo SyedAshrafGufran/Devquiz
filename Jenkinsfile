@@ -48,7 +48,7 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                withEnv(["KUBECONFIG=C:\\Program Files\\Jenkins\\config"]) {
+                withEnv(["KUBECONFIG=C:\\Users\\Ashraf\\.kube\\config"]) {
     bat 'kubectl apply -f k8s\\mongo-deployment.yaml'
     bat 'kubectl apply -f k8s\\mongo-service.yaml'
     bat 'kubectl apply -f k8s\\backend-deployment.yaml'
