@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ashraf1786/devquiz-frontend
+          image: ashraf1786/devquiz-frontend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80
