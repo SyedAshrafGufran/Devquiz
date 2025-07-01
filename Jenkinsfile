@@ -59,13 +59,13 @@ pipeline {
 
         }
     }
-    stage('Expose App URL'){
-      steps {
-        script {
-          bat '"C:\\Users\\Ashraf\\tools\\minikube.exe" service frontend'
-        }
-      }
-    }
+    // stage('Expose App URL'){
+    //   steps {
+    //     script {
+    //       bat '"C:\\Users\\Ashraf\\tools\\minikube.exe" service frontend'
+    //     }
+    //   }
+    // }
     
   }
 }
