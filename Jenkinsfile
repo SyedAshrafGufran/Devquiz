@@ -62,7 +62,7 @@ pipeline {
     stage('Expose App URL'){
       steps {
         script {
-          bat 'minikube service frontend'
+          bat '"C:\\Users\\Ashraf\\tools\\minikube.exe" service frontend'
         }
       }
     }
