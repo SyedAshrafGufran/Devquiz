@@ -59,6 +59,13 @@ pipeline {
 
         }
     }
+    stage('Expose App URL'){
+      steps {
+        script {
+          bat 'minikube service frontend'
+        }
+      }
+    }
     
   }
 }
